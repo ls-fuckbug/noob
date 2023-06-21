@@ -1,0 +1,42 @@
+# Command
+
+git reset HEAD    重置暂存区到前一个提交状态，工作区不受影响  
+git reset --hard HEAD   重置暂存区和工作区到前一个提交的状态  
+git reset --hard origin/main  重置到远程分支的最新提交   
+
+
+
+git checkout .         检出，用暂存区的内容覆盖工作区的内容
+
+
+git rm —cached file    从暂存区删除文件，工作区不改变
+
+git status     查看当前仓库状态
+git diff       比较暂存区和工作区
+git log        查看历史提交记录
+
+git branch -vv 查看本地分支与远程分支对应关系
+
+
+
+
+
+# Util
+工作区   add    暂存区  commit   本地分支  push  远程分支
+
+
+
+
+
+
+# gitignore
+
+Git更新ignore文件直接修改gitignore是不会生效的，需要先去掉已经托管的文件，修改完成之后再重新添加并提交。
+第一步：git rm -r --cached .
+去掉暂存区已经托管的文件
+第二步：修改自己的igonre文件内容
+第三步：git add .
+git commit -m "clear cached"
+
+
+
