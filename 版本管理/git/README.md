@@ -3,7 +3,12 @@
 git reset HEAD    重置暂存区到前一个提交状态，工作区不受影响  
 git reset --hard HEAD   重置暂存区和工作区到前一个提交的状态  
 git reset --hard origin/main  重置到远程分支的最新提交   
+git push -f  来覆盖被 reset 的 commit  
 
+
+git revert 21dcd937fe555f58841b17466a99118deb489212  回退自己的提交 
+
+git revert -m 1 \<commitHash\>    revert合并提交
 
 
 git checkout .         检出，用暂存区的内容覆盖工作区的内容
@@ -17,6 +22,15 @@ git log        查看历史提交记录
 
 git branch -vv 查看本地分支与远程分支对应关系
 
+git stash 保存暂未commit的代码  
+git pop 应用最新的一次stash，并删除记录  
+git stash save "xxxx"  保存  
+git stash list  列出stash记录  
+
+
+git relog  记录了 commit 的历史操作。  
+
+git rebase -i   用于合并提交记录  
 
 
 
