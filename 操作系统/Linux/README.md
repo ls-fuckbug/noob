@@ -6,6 +6,8 @@
 - 查找文件: find path -type d -name "xxx" -d指定类型  
 - 远程传输: scp (-r) src dst    
 
+- 本地公钥复制至远程  ssh-copy-id dst 
+
 
 
 
