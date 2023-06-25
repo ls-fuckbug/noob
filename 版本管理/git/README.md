@@ -18,6 +18,9 @@ git rm —cached file    从暂存区删除文件，工作区不改变
 
 git status     查看当前仓库状态
 git diff       比较暂存区和工作区
+git diff master  比较工作区和历史区  
+git diff --cached 比较暂存区和历史区  
+
 git log        查看历史提交记录
 
 git branch -vv 查看本地分支与远程分支对应关系
@@ -36,7 +39,7 @@ git rebase -i   用于合并提交记录
 
 
 # Util
-工作区   add    暂存区  commit   本地分支  push  远程分支
+工作区   add    暂存区  commit   本地分支（历史区）  push  远程分支
 
 
 
