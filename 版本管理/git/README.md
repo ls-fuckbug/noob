@@ -14,7 +14,7 @@ git revert -m 1 \<commitHash\>    revert合并提交
 git checkout .         检出，用暂存区的内容覆盖工作区的内容
 
 
-git rm —cached file    从暂存区删除文件，工作区不改变
+git rm —-cached file    从暂存区删除文件，工作区不改变
 
 git status     查看当前仓库状态
 git diff       比较暂存区和工作区
@@ -22,6 +22,9 @@ git diff master  比较工作区和历史区
 git diff --cached 比较暂存区和历史区  
 
 git log        查看历史提交记录
+
+git checkout -b \<新分支名\> origin/main  创建一个基于远程main的分支
+
 
 git branch -vv 查看本地分支与远程分支对应关系
 
@@ -34,6 +37,9 @@ git stash list  列出stash记录
 git relog  记录了 commit 的历史操作。  
 
 git rebase -i   用于合并提交记录  
+
+git push origin HEAD   push当前分支到远程
+
 
 
 
