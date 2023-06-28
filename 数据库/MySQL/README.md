@@ -36,6 +36,23 @@ InnoDB在创建表时可以设置 COLLATE utf8mb4_bin指定大小写敏感
 `show collation where charset = 'utf8mb4';`
 ci结尾为大小写不敏感，bin结尾的是大小写敏感  
 
+## 高并发下更新丢失
+
+两个事务同时更新一行数据，一个事务对数据的更新把另一个事务对数据的更新覆盖了。这是因为系统没有执行任何的锁操作，因此并发事务并没有被隔离开来。
+
+- 第一类丢失更新： A事务撤销时，把已经提交的B事务的更新数据覆盖了。SQL标准中未对此做定义，所有数据库都已解决了第一类丢失更新的问题。
+
+- 第二类丢失更新
+
+A事务覆盖B事务已经提交的数据，造成B事务所做操作丢失。
+
+解决方案
+
+1. 调整SQL语句，将更新赋值逻辑改为“c=c+x”形式，其中c为要更新的字段，x为增量值。这种方式能确保累加值不会被覆盖。
+
+2. 悲观锁：利用redis分布式锁
+
+3. 乐观锁： 增加版本概念，若版本冲突则回退
 
 
 # 基础知识 
@@ -92,6 +109,53 @@ MVCC会给每行元组加一些辅助字段，记录创建版本号和删除版�
 2. varchar可变长度，varchar(n)中的n表示字符数，最大空间是65535个字节, 可以设置最大长度；适合用在长度可变的属性。
 
 3. text不设置长度， 当不知道属性的最大长度时，适合用text。
+
+
+## 两阶段提交
+
+1. 写入redo log, 置redo log状态为prepare
+2. 写bin log
+3. 修改redo log状态为commit
+
+bin log是否完整是事务是否成功的标志
+
+那为什么还需要第三步呢？
+如果没有第三步，在判断redo_log和bin_log是否一致时需要全量对比，性能差。
+
+- redo log : 固定大小、循环写的日志文件
+
+- bin log : 无限大小、追加写的日志文件
+
+一条数据首先被写入内存，之后再被写入磁盘。
+redo log就是用来记录写入内存但未刷盘的日志，已经刷入磁盘的数据都会从 redo log 这个有限大小的日志文件里删除。  
+已经刷入磁盘的数据都会从 redo log 这个有限大小的日志文件里删除。  
+
+
+当数据库 crash 后，如何恢复未刷盘的数据到内存中？
+根据 redo log 和 binlog 的两阶段提交，未持久化的数据分为几种情况：
+
+1. change buffer 写入，redo log 虽然做了 fsync 但未 commit，binlog 未 fsync 到磁盘，这部分数据丢失。
+
+2. change buffer 写入，redo log fsync 未 commit，binlog 已经 fsync 到磁盘，先从 binlog 恢复 redo log，再从 redo log 恢复 change buffer。
+
+3. change buffer 写入，redo log commit 和 binlog 都已经 fsync，直接从 redo log 里恢复。
+
+
+# MYSQL数据类型中长度的含义
+
+## 字符串类型
+CHAR(10) VARCHAR(10)  n表示可容纳的最大字符数
+
+## 整数类型
+INT(5) n表示显示位宽，基本没用。
+
+## 浮点数类型
+DECIMAL(M, D) M代表最大位数，D表示小数点右侧的位数。  
+DECIMAL是以字符串形式存储的，所以会占用M个字节。
+
+
+
+
 
 
 
