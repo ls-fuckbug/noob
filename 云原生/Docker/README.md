@@ -6,6 +6,8 @@
 - docker build -f: 用于指定要使用的 Dockerfile 文件路径或名称。-f 表示 "file"，即指定 Dockerfile。  
 - docker --build-arg: 用于在构建 Docker 镜像时传递构建参数（build arguments）。--build-arg 选项允许您在构建过程中向 Dockerfile 中的 ARG 指令传递值。  
 - docker push: 用于将本地构建的 Docker 镜像推送（上传）到远程的 Docker 镜像仓库。通过使用 docker push 命令，您可以将自己构建的镜像发布到公共或私有的镜像仓库，以供其他人访问和使用  
+- docker ps: 查看正在运行的容器
+- docker ps -a: 查看所有容器 
 
 
 
