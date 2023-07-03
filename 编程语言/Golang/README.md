@@ -50,6 +50,12 @@ defer timeCost()()   // 注意，是对 timeCost() 返回的函数进行延迟�
 	recover 和 panic 需要在同一个 goroutine 使用，跨 goroutine 无法恢复应用。
 
 
+- channel
+	
+	channle 本质上是一个数据结构——（队列），数据是先进先出。具有线程安全机制，多个go程访问时，不需要枷锁，也就是说channel本身是线程安全的。channel是有类型的，如一个string类型的channel只能存放string类型数据。
+
+
+
 
 
 

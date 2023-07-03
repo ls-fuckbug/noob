@@ -47,3 +47,22 @@ Istio 使用功能强大的 Envoy 服务代理扩展了 Kubernetes，以建立�
 	UTF-8是Unicode的实现方式之一。UTF-8是一种变长的编码方式。
 	UTF-8向下兼容ASCII编码
 
+
+
+# 服务器渲染
+
+	服务端渲染就是在浏览器请求页面URL的时候，服务端将我们需要的HTML文本组装好，并返回给浏览器，这个HTML文本被浏览器解析之后，不需要经过 JavaScript 脚本的执行，即可直接构建出希望的 DOM 树并展示到页面中。这个服务端组装HTML的过程，叫做服务端渲染。
+
+[好文](https://github.com/yacan8/blog/issues/30)
+
+
+
+# CDN
+  
+  CDN（Content Delivery Network，内容分发网络）可以简单理解为对象存储对应的缓存层。  
+  CNAME CDN专用的DNS域名服务器， 它会返回离调用方最近的服务器IP  
+
+  
+ 
+
+
