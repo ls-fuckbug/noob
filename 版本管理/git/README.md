@@ -28,6 +28,8 @@ git checkout -b \<新分支名\> origin/main  创建一个基于远程main的分
 
 git branch -vv 查看本地分支与远程分支对应关系
 
+git merge branch  将branch合并到当前分支  
+
 git stash 保存暂未commit的代码  
 git pop 应用最新的一次stash，并删除记录  
 git stash save "xxxx"  保存  
@@ -46,6 +48,15 @@ git push origin HEAD   push当前分支到远程
 
 # Util
 工作区   add    暂存区  commit   本地分支（历史区）  push  远程分支
+
+通常来说在 ====== 标记之前的内容来自于接收合并的分支，而在这之后的内容来自于要合并的分支。
+```
+<<<<<<<<
+
+========
+
+>>>>>>>>
+```
 
 
 

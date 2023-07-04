@@ -55,7 +55,7 @@
 
 # sse 与 web socket
 
-## event source 
+## sse (server-sent events)  
 
 
 SSE 是基于 HTTP 的服务器推送技术，使用简单的长轮询机制。  
