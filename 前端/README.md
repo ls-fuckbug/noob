@@ -1,3 +1,52 @@
+# 网页
+
+网页一般由三部分组成，分别是 HTML（超文本标记语言）、CSS（层叠样式表）和 JavaScript（简称“JS”动态脚本语言），它们三者在网页中分别承担着不同的任务。
+
+- HTML 负责定义网页的内容  
+
+- CSS 负责描述网页的布局  
+
+- JavaScript 负责网页的行为  
+
+
+# HTML
+
+HTML 英文全称是 Hyper Text Markup Language，中文译为“超文本标记语言”，专门用来设计和编辑网页。
+
+## HTML标签语法格式  
+
+一般情况下，一个 HTML 标签由开始标签、属性、内容和结束标签组成，标签的名称不区分大小写，但大多数属性的值需要区分大小写  
+
+## 常用HTML标签  
+```
+标题标签 <h1>  
+段落标签 <p>  
+超链接标签 <a>  
+图片标签 <img>  
+表格标签 <table>  
+列表标签 <ul> <ol> <dl>
+	有序列表： <ol> + <li> list term  
+	无序列表： <ul> + <li> list term
+	自定义列表: <dl> + <dt> definition term + <dd> definition description  
+表单标签 <form>  
+
+
+```
+
+## HTML属性 attr  
+
+```
+href 属性可以为 <a> 标签提供链接地址；  
+src 属性可以为 <img> 标签提供图像的路径；  
+style 属性可以为几乎所有标签定义 CSS 样式。  
+id 属性 唯一标识   
+class 属性不必唯一标识  
+title 属性对标签内容描述  
+
+```
+
+
+
 # DOM
 
 DOM 是 W3C（万维网联盟）的标准。
