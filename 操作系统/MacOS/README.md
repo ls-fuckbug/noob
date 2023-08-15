@@ -11,6 +11,11 @@ Zsh: zsh能基本完美兼容bash的命令,并且有自动补全等好用的功�
 高版本MacOS默认用Zsh， 不同的shell可以通过chsh来进行切换  
 
 
+# 打开目录快捷键
+
+command+shift+g
+
+
 
 
 

@@ -16,5 +16,15 @@ div+p       选取所有在div元素后的第一个p元素
 :link       选择所有未访问的链接  
 :visited    选择所有已访问的链接  
 *           选择所有
+:not([target])   选取不带target属性的元素
  
 ```
+
+
+
+
+# 查看网页cookie
+
+console输入 document.cookie 即可显示当前页面cookie信息
+
+

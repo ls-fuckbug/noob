@@ -36,7 +36,7 @@ mav package: 对项目、工程、模块进行打包操作，打包后位置为 
 - 更新包 conda update XXX  
 - 删除包 conda remove XXX  
 - 安装到指定环境 conda install -n myenv XXX  
-- 生成依赖文件  conda env export --name <环境名称> --file environment.yml
+- 生成依赖文件  conda env export --name <环境名称> --file environment.yml  
 
 
 

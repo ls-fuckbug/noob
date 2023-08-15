@@ -13,6 +13,25 @@ document : 类似mysql记录
 而Type字段并没有多少意义。目前Type已经被Deprecated，在7.0开始，一个索引只能建一个Type为_doc  
 
 
+# es数据类型
+
+
+## string类型
+
+    text: 会分词  
+    keyworld: 不会分词  
+
+## date时间类型  
+
+    和mysql类似，但可以控制时间的format
+
+## 复杂类型        
+
+    array: 在Elasticsearch中，数组不需要专用的字段数据类型。默认情况下，任何字段都可以包含零个或多个值，但是，数组中的所有值都必须具有相同的数据类型。  
+    object: 即对象，需要注意的是，List<object>中的 object不允许彼此独立地索引查询。
+    nested: 需要建立对象数组的索引并保持数组中每个对象的独立性，则应使用nested数据类型而不是 object数据类型。在内部，嵌套对象索引阵列作为一个单独的隐藏文档中的每个对象，这意味着每个嵌套的对象可以被独立的查询。  
+
+
 
 # Command
 
@@ -30,9 +49,10 @@ GET /_cat/indices?v
 查询文档
 
 ```
+// 根据id
 GET /example/_doc/37191ffa-31eb-4c1c-8d77-821867e6e41c
 
-
+// 根据query
 GET /{索引名}/_search
 {
         "from" : 0,  // 返回搜索结果的开始位置
@@ -49,8 +69,7 @@ GET xxx/_search
 {
     "query":
     {
-        "match_all":
-        {}
+        "match_all":{}
     }
 }
 
@@ -64,6 +83,60 @@ GET xxx/_count
         {}
     }
 }
+
+// term查询， 不分词直接匹配词条
+GET es_user/_search
+{
+  "query": {
+    "term": {
+      "address": {
+        "value": "杭州好地方"
+      }
+    }
+  }
+}
+
+// prefix查询
+GET es_user/_search
+{
+  "query": {
+    "prefix": {
+      "address": {
+        "value": "杭"
+      }
+    }
+  }
+}
+
+// wildcard查询，不分词通配符的方式匹配词条。
+GET es_user/_search    
+{
+  "query": {
+    "wildcard": {
+      "address": {
+        "value": "杭州*"
+      }
+    }
+  }
+}
+
+// range查询
+POST es_user/_search
+{
+  "query": {
+    "range": {
+      "age": {
+        "gte": 32,
+        "lte": 36
+      }
+    }
+  }
+}
+
+// 复合查询
+must、must not、should
+
+// filter查询， filter不影响文档的评分，不会改变文档的相关性排序。
 
 
 // 查询按字符串搜索

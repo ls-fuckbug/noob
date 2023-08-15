@@ -22,7 +22,8 @@ HTML 英文全称是 Hyper Text Markup Language，中文译为“超文本标记
 	元素的内容是开始标签与结束标签之间的内容   
 	某些 HTML 元素具有空内容（empty content）  
 	空元素在开始标签中进行关闭（以开始标签的结束而结束）  
-	大多数 HTML 元素可拥有属性  
+	大多数 HTML 元素可拥有属性   
+	HTML标签可以嵌套  
 
 ## 常用HTML标签  
 ```
