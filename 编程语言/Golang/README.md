@@ -59,6 +59,11 @@ defer timeCost()()   // 注意，是对 timeCost() 返回的函数进行延迟�
 
 ## 数据结构
 
+- context
+	Go 语言中的 context.Context 的主要作用还是在多个 Goroutine 组成的树中同步取消信号以减少对资源的消耗和占用，虽然它也有传值的功能，但是这个功能我们还是很少用到。
+	
+
+
 - channel
 	
 	channle 本质上是一个数据结构——（队列），数据是先进先出。具有线程安全机制，多个go程访问时，不需要加锁，也就是说channel本身是线程安全的。channel是有类型的，如一个string类型的channel只能存放string类型数据。

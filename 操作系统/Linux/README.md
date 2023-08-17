@@ -8,6 +8,8 @@
 
 - 本地公钥复制至远程  ssh-copy-id dst 
 
+- 建立符号链接: ln -s srcpath dstpath  
+
 
 - 查看linux系统版本: uname -a  
 - 查看计算机名: hostname
@@ -31,6 +33,13 @@
 
 
 - 查看定时任务: crontab -l
+
+- 程序后台运行： nohup   
+
+- 终止进程： ctrl + c  
+- 暂停进程： ctrl + z  
+- 将任务放入后台： bg %n   
+- 设置任务忽略SIGHUB信号： disown -h %n   
 
 
 # 基础知识
@@ -88,6 +97,13 @@ R ：该程序目前正在运作，或者是可被运作
 S ：该程序目前正在睡眠当中 (可说是 idle 状态)，但可被某些讯号 (signal) 唤醒。
 T ：该程序目前正在侦测或者是停止了
 Z ：该程序应该已经终止，但是其父程序却无法正常的终止他，造成 zombie (疆尸) 程序的状态
+	 <    高优先级  
+    N    低优先级  
+    L    有些页被锁进内存  
+    s    包含子进程  
+    +    位于前台的进程组  
+    l    多线程，克隆线程  multi-threaded (using CLONE_THREAD, like NPTL pthreads do)  
+
 START：该 process 被触发启动的时间
 TIME ：该 process 实际使用 CPU 运作的时间
 COMMAND：该程序的实际指令
