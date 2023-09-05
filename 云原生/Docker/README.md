@@ -10,7 +10,8 @@
 - docker ps -a: 查看所有容器   
 - docker pull: 下载镜像  
 - docker image ls: 列出已下载的镜像  
-- docker commit: 将容器保存为镜像（不建议）  
+- docker commit: 将容器保存为镜像（不建议）
+- docker logs container_id:  查看日志  
 
 
 
