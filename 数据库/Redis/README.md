@@ -398,6 +398,10 @@ lfu
 
 
 
+# 友情链接 
+
+ [redis知识体系](https://pdai.tech/md/db/nosql-redis/db-redis-overview.html)
+ 
 
 
 
