@@ -1,5 +1,5 @@
 
-# ski squence
+# ski sequence
 
 1. 后刃推坡
 2. 后刃斜滑
