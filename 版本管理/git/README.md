@@ -43,7 +43,13 @@ git rebase -i   用于合并提交记录
 git push origin HEAD   push当前分支到远程
 
 
-
+对比两个版本库： 
+```
+	git remote add -f b https://xxxxpath/to/repo_b.git  
+	git remote update  
+	git diff master remotes/b/master  
+	git remote rm b  
+```
 
 
 # Util
