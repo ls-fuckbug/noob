@@ -42,6 +42,8 @@ git rebase -i   用于合并提交记录
 
 git push origin HEAD   push当前分支到远程
 
+git push origin a:b  push本地分支a到远程b
+
 
 对比两个版本库： 
 ```
