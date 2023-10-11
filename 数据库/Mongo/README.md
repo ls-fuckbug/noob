@@ -11,3 +11,18 @@ MongoDB是一个面向文档的数据库，它以类似JSON格式的BSON（Binar
 
 
 
+# Command
+
+显示所有数据库： show dbs  
+切换数据库： use xxx  
+显示所有集合： show collections  
+文档增删改查： 
+```
+插入文档： db.<collection_name>.insertOne(<document>)
+查询文档： db.<collection_name>.find(<query>)   
+		  query: { name: "John" }  
+更新文档： db.<collection_name>.updateOne(<filter>, <update>) 
+删除文档： db.<collection_name>.deleteOne(<filter>) 
+
+
+```
