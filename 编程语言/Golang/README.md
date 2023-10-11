@@ -36,6 +36,19 @@ defer timeCost()()   // 注意，是对 timeCost() 返回的函数进行延迟�
 
 ```
 
+# golang浮点数计算利器 decimal 
+
+decimal是为了解决Golang中浮点数计算时精度丢失问题而生的一个库，使用decimal库我们可以避免在go中使用浮点数出现精度丢失的问题。
+
+github地址：https://github.com/shopspring/decimal
+
+使用decimal的时候，切记浮点数计算所有数据的初始化必须通过decimal进行，否则还是会导致精度的丢失  
+
+- 为什么浮点数是不精确的？ 
+
+计算机内部数字采用二进制存储， 所以对于小数而言， 计算机只能用这些个 1/(2^n） 之和来表达十进制的小数。 而计算机不可能提供无限的空间让程序去存储这些二进制小数， 比如golang的double就是64位。
+
+
 
 # 基础知识
 
