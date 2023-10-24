@@ -87,6 +87,8 @@ github地址：https://github.com/shopspring/decimal
 
 	slice不是线程安全的
 
+	nil切片和空切片不一样，nil切片指向的地址不存在，而所有空切片固定指向一个zero数组
+
 - map 
 	
 	map不是线程安全的
@@ -130,6 +132,13 @@ github地址：https://github.com/shopspring/decimal
 
 - G0: G0 是每次启动一个 M 都会第一个创建的 gourtine，G0 仅用于负责调度的 G，G0 不指向任何可执行的函数，每个 M 都会有一个自己的 G0（负责调度该M绑定的P的本地队列中的G）。在调度或系统调用时会使用 G0 的栈空间，全局变量的 G0 是 M0 的 G0  
 
+
+
+## http/net
+
+一次建立连接，就会启动一个读goroutine和写goroutine。
+
+在获得resp.Body的内容后，不进行resp.Body.Close()，内存泄漏是一定的。
 
 
 
