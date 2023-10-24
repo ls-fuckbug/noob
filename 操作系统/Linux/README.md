@@ -142,10 +142,8 @@ slurm是一个开源、容错和高度可扩展的集群管理和作业调度系
 
 supervisor主要的作用是管理进程，主要通过fork/exec进程对其启动（将其作为子进程），之后supervisor作为父进程对其启动，即使断电宕机也可将其重启，主要在配置文件中书写autostart=true即可。而传统方式的当即重启脚本需要写一个脚本来监控
 
-supervisor配置文件：/etc/supervisord.conf  
-子进程配置文件路径：/etc/supervisord.d/  
+supervisor启动的进程是由root创建，程序日志文件目录未指定会写在/下
 
-supervisor启动：  supervisor -c /etc/supervisor.conf  
 
 
 
@@ -349,6 +347,8 @@ IO密集型核心线程数 = CPU核数 / （1-阻塞系数）。
 
 当线程等待时间所占比例越高，需要越多线程，启用其他线程继续使用CPU，以此提高CPU的利用率；
 当线程CPU时间所占比例越高，需要越少的线程，通常线程数和CPU核数一致即可，这一类型在开发中主要出现在一些计算业务频繁的逻辑中。
+
+
 
 
 
