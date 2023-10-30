@@ -486,7 +486,19 @@ translog的fsync是ES在后台自动执行的，默认是每5秒钟主动进行�
 translog的清除时间时进行flush操作之后（将数据从filesystem cache刷入disk之中）。
 
 
+## segement
 
+在ES中，单个倒排索引文件被称为Segment,这个Segment一旦生成就不可变更，多个Segments汇总在一起，就是一个Shards
+
+
+
+# 如何合并es联合索引查询？
+
+两种方式：
+
+1. 使用skip list结构遍历
+
+2. 使用bitset数据结构， 构建bitset然后进行AND操作
 
 
 
