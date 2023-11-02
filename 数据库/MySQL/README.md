@@ -161,6 +161,12 @@ Extra: 提供其他与查询相关的附加信息，如排序操作、临时表�
 
 mysql的between包含边界值
 
+## NULL
+
+in匹配的时候用的是=  
+not in 匹配的时候用的是 <>
+NULL只能用is null或者is not null来判定
+
 ## 大小写
 
 MySQL在Linux下数据库名、表名、列名、别名大小写规则是这样的：
