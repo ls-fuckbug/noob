@@ -6,6 +6,7 @@ Golang的相对路径是相对于执行命令时的目录
 
 
 # 宏定义  
+
 GOROOT: Go程序安装路径  
 GOPATH: Go工作区，存放第三方代码  
 GOBIN: Go可执行程序，引用包路径  
@@ -75,8 +76,7 @@ github地址：https://github.com/shopspring/decimal
 ## 数据结构
 
 - context
-	Go 语言中的 context.Context 的主要作用还是在多个 Goroutine 组成的树中同步取消信号以减少对资源的消耗和占用，虽然它也有传值的功能，但是这个功能我们还是很少用到。
-
+	Go 语言中的 context.Context 的主要作用还是在多个 Go routine 组成的树中同步取消信号以减少对资源的消耗和占用，虽然它也有传值的功能，但是这个功能我们还是很少用到。
 
 
 - channel
@@ -370,7 +370,7 @@ sync.Map 的实现原理可概括为：
 ### 优缺点
 
 - 优点：Go官方所出；通过读写分离，降低锁时间来提高效率；  
-- 缺点：不适用于大量写的场景，这样会导致 read map 读不到数据而进一步加锁读取，同时dirty map也会一直晋升为read map，整体性能较差，甚至没有单纯的 map+metux 高。  
+- 缺点：不适用于大量写的场景，这样会导致 read map 读不到数据而进一步加锁读取，同时dirty map也会一直晋升为read map，整体性能较差，甚至没有单纯的 map+mutex 高。  
 - 适用场景：读多写少的场景   
 
 
