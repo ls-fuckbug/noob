@@ -14,6 +14,10 @@ Elasticsearch是一个开源的搜索引擎，分布式的实时文件存储，�
 
 - shard: 分片， 在创建一个索引时可以指定分成多少个分片来存储。每个分片本身也是一个功能完善且独立的“索引”，可以被放置在集群的任意节点上。
 
+- segment: 段
+
+在 Elasticsearch 中，最基本的数据存储单位是 shard。 但是，通过 Lucene 镜头看，情况会有所不同。 在这里，每个 Elasticsearch 分片都是一个 Lucene 索引 (index)，每个 Lucene 索引都包含几个 Lucene segments。 一个 Segment 包含映射到文档里的所有术语（terms) 一个反向索引 (inverted index)。
+
 - replication: 备份，一个分片可以有多个备份。
 
 - mapping: 类似mysql的表结构schema
@@ -538,14 +542,29 @@ es有一个file system cache ,第一次查询数据时，其实是去磁盘读�
 
 ## refresh
 
-最原始的ES版本里，必须等待fsync将segment刷入磁盘，才能将segment打开供search使用，这样的话，从一个document写入到它可以被搜索，可能会超过一分钟，主要瓶颈是在fsync实际发生磁盘IO写数据进磁盘，是很耗时的，这就不是近实时的搜索了。为此，引入refresh操作的目的是提高ES的实时性，使添加文档尽可能快的被搜索到，同时又避免频繁fsync带来性能开销，依靠的原理就是文件系统缓存OS cache里缓存的文件可以被打开(open/reopen)和读取，而这个os cache实际是一块内存区域，而非磁盘，所以操作是很快的。
+### 背景
 
-将缓存数据生成segment后刷入os cache，并被打开供搜索的过程就叫做refresh，默认每隔1秒。也就是说，每隔1秒就会将buffer中的数据写入一个新的index segment file，先写入os cache中。所以，es是近实时的，输入写入到os cache中可以被搜索，默认是1秒，所以从数据插入到被搜索到，最长是1秒（可配）。
+最原始的ES版本里，必须等待fsync将segment刷入磁盘，才能将segment打开供search使用，这样的话，从一个document写入到它可以被搜索，可能会超过一分钟，主要瓶颈是在fsync实际发生磁盘IO写数据进磁盘，是很耗时的，这就不是近实时的搜索了。为此，引入refresh操作的目的是提高ES的实时性，使添加文档尽可能快的被搜索到，同时又避免频繁fsync带来性能开销
+
+### 写入过程
+
+当我们把一条数据写入到 Elasticsearch 中后，它并不能马上被用于搜索。新增的索引必须写入到 Segment 后才能被搜索到，因此我们把数据写入到内存缓冲区之后并不能被搜索到。新增了一条记录时，Elasticsearch 会把数据写到 translog 和 in-memory buffer (内存缓存区)中。
+
+在此期间，该文档不能被搜索，但是我们还是可以通过 ID 使用 GET 来获得该文档。如果希望该文档能立刻被搜索，需要手动调用 refresh 操作。在 Elasticsearch 中，默认情况下 refresh 操作设置为每秒执行一次。 在此操作期间，内存中缓冲区的内容将复制到内存中新创建的 Segment 中。 
+
+将缓存数据生成segment后刷入os cache，并被打开供搜索的过程就叫做refresh，默认每隔1秒。也就是说，每隔1秒就会将buffer中的数据写入一个新的index segment file，先写入os cache中。所以，es是近实时的，输入写入到os 
+
+### 批量建索引时的优化
+
+refresh 的开销比较大,我在自己环境上测试 10W 条记录的场景下 refresh 一次大概要 14ms，因此在批量构建索引时可以把 refresh 间隔设置成 -1 来临时关闭 refresh, 等到索引都提交完成之后再打开 refresh
+
+另外当你在做批量索引时,可以考虑把副本数设置成0，因为 document 从主分片 (primary shard) 复制到从分片 (replica shard) 时,从分片也要执行相同的分析、索引和合并过程,这样的开销比较大，你可以在构建索引之后再开启副本，这样只需要把数据从主分片拷贝到从分片
 
 
 ## flush
 
 当向elasticsearch发送创建document文档添加请求的时候，document数据会先进入到buffer，与此同时会将操作记录在translog之中，当发生refresh时（数据从index buffer中进入filesystem cache的过程）translog中的操作记录并不会被清除，而当数据从os cache中被写入磁盘之后才会将translog中清空。这个将os cache的索引文件(segment file)持久化到磁盘的过程就是flush，flush之后，这段translog的使命就完成了，因为segment已经写入磁盘，就算故障也可以从磁盘的segment文件中恢复。
+
 flush的时机可能是 1.定时flush； 2.translog大小达到阈值； 3.一些重要操作; 4.指令触发。
 
 
