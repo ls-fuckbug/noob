@@ -73,6 +73,11 @@ Istio 使用功能强大的 Envoy 服务代理扩展了 Kubernetes，以建立�
 Domain Specific Language 领域专用语言
 
 
+# MIME
+
+MIME(Multipurpose Internet Mail Extensions)多用途互联网邮件扩展类型。是设定某种扩展名的文件用一种应用程序来打开的方式类型，当该扩展名文件被访问的时候，浏览器会自动使用指定应用程序来打开。
+
+
 
 
  
