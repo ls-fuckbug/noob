@@ -596,7 +596,38 @@ translog的清除时间时进行flush操作之后（将数据从filesystem cache
 2. 使用bitset数据结构， 构建bitset然后进行AND操作
 
 
+# FST
 
+FST最重要的功能是可以实现key到value的映射，相当于HashMap。FST的查询速度比hashMap慢一点，但是内存消耗比hashMap小很多。FST在lucene大量使用:倒排索引的存储，同义词词典的存储，搜索关键字建议等等。
+
+## es倒排索引
+
+Elasticsearch调用lucene为msg字段都建立了一个倒排索引，i, study, elasticsearch, MySql,Redis这些叫term，而 1，2，3 就是Posting List。Posting list就是一个int的数组，存储了所有包含某个term的文档id。通过posting list这种索引方式可以很快进行查找，比如要找包含study的文档，通过对term搜索，匹配到study后随即就可以得到对应的posting list定位到具体的文档
+
+### term Dictionary
+
+Elasticsearch为了能快速找到某个term，将所有的term排序，二分法查找term，logN的查找效率，就像通过字典查找一样，这就是Term Dictionary。类似于传统数据库的B-Tree的，但是Term Dictionary较B-Tree的查询快。
+
+### term Index
+
+B-Tree通过减少磁盘寻道次数来提高查询性能，Elasticsearch也是采用同样的思路，直接通过内存查找term，不读磁盘，但是如果term太多，term dictionary也会很大，放内存不现实，于是有了Term Index，就像字典里的索引页一样，A开头的有哪些term，分别在哪页，term index其实是一颗 (trie) 前缀树，这棵树不会包含所有的term，它包含的是term的一些前缀。通过term index可以快速地定位到term dictionary的某个offset，然后从这个位置再往后顺序查找。
+
+
+### 前缀树的问题
+
+ES为了能提高查询效率，能够在内存中操作查询term，使用了前缀树term index来优化查询。
+
+但前缀树存在一个问题，用上面的term index为例，当插入一个新的term tasted到term中时，我们可以看到ted这个字符之前就已经存在term index中，新term tasted的插入使ted出现了重复，数据的重复势必导致空间浪费。在大数据量的ES中term数以亿计，前缀树中字符重复的问题浪费的空间就特别庞大了，因此ES使用了FST数据结构来压缩优化term index数据。
+
+### FST 有向图
+
+FST是将term拆成单个字母存在节点上，每个节点存一个字母，根节点不存，从根节点出发到特定节点所经过的字母就可以组成目标term，其经过路径的权重和就是该term在Term Dictionary中对应的位置
+
+- 优点
+
+1. 空间占用小。通过对词典中单词前缀和后缀的重复利用，压缩了存储空间，300万条数字使用FST存储 文件大小2k左右
+
+2. 查询速度快。O(len(str))的查询时间复杂度。
 
 
 # 友情链接
