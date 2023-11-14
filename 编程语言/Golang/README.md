@@ -522,7 +522,7 @@ Go 语言的标准库代码包 sync/atomic 提供了原子的读取（Load 为�
 
 # golang内存泄漏
 
-go 中的内存泄漏一般都是 goroutine 泄漏，就是 goroutine 没有被关闭，或者没有添加超时控制，让 goroutine 一只处于阻塞状态，不能被 GC。
+go 中的内存泄漏一般都是 goroutine 泄漏，就是 goroutine 没有被关闭，或者没有添加超时控制，让 goroutine 一直处于阻塞状态，不能被 GC。
 
 
 
