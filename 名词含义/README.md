@@ -57,7 +57,7 @@ Istio 使用功能强大的 Envoy 服务代理扩展了 Kubernetes，以建立�
 
 
 
-# CDN
+# CDN缓存
   
   CDN（Content Delivery Network，内容分发网络）可以简单理解为对象存储对应的缓存层。  
   CNAME CDN专用的DNS域名服务器， 它会返回离调用方最近的服务器IP  
