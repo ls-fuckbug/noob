@@ -151,7 +151,9 @@ map不是线程安全的
 
 string底层是byte数组实现的，byte等同于int8, rune等同于int32
 
-golang单引号是rune, 双引号是字符串。
+单引号，表示byte类型或rune类型，对应 uint8和int32类型，默认是 rune 类型。byte用来强调数据是raw data，而不是数字；而rune用来表示Unicode的code point。
+
+双引号是字符串。
 
 
 ### 可比较类型与不可比较类型
