@@ -1,9 +1,9 @@
 # Command
 
-启动  nginx
-停止  nginx -s stop
-重启  nginx -s reload
-查看Nginx配置  nginx -T
+启动  nginx  
+停止  nginx -s stop  
+重启  nginx -s reload  
+查看Nginx配置  nginx -T  
 
 
 
