@@ -525,6 +525,21 @@ Go 语言的标准库代码包 sync/atomic 提供了原子的读取（Load 为�
 go 中的内存泄漏一般都是 goroutine 泄漏，就是 goroutine 没有被关闭，或者没有添加超时控制，让 goroutine 一直处于阻塞状态，不能被 GC。
 
 
+# golang哪些情况会导致panic？
+
+1. 数组越界和字符串越界
+
+2. 空指针引用
+
+3. 断言失败
+
+4. 并发访问map
+
+5. 向已关闭的管道写数据会导致panic
+
+6. stack overflow  递归死循环或超出栈空间
+
+
 
 
 
