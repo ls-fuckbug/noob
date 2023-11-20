@@ -144,7 +144,13 @@ supervisor主要的作用是管理进程，主要通过fork/exec进程对其启�
 
 supervisor启动的进程是由root创建，程序日志文件目录未指定会写在/下
 
+使用 Supervisor 的最佳实践是为它将处理的每个程序编写一个配置文件。
 
+在 Supervisor 下运行的所有程序都必须在非守护模式下运行（有时也称为“前台模式”）。如果默认情况下你的程序在运行后会自动返回到 shell，那么你可能需要查阅程序的手册来找到启用此模式的选项，否则 Supervisor 将无法正确确定程序的状态。
+
+Supervisor程序的每个程序配置文件位于 /etc/supervisor/conf.d 目录中，通常每个文件运行一个程序，并以.conf 结尾。
+
+管理程序： sudo supervisorctl
 
 
 # 用户空间/内核空间
