@@ -4,9 +4,11 @@ Bash: Bash Shell 是一种 UNIX shell 和命令语言。它是由 Brain Fox 为 
 
 `vim ~/.bahsrc`  
 
-Zsh: zsh能基本完美兼容bash的命令,并且有自动补全等好用的功能
+bash
 
 `vim ~/.zshrc`  
+
+zsh: zsh能基本完美兼容bash的命令,并且有自动补全等好用的功能
 
 高版本MacOS默认用Zsh， 不同的shell可以通过chsh来进行切换  
 

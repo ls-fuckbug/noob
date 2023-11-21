@@ -8,11 +8,6 @@
 
 
 
-
-
-
-
-
 # Command  
 
 - 启动scheduler： nohup airflow scheduler >>airflow-scheduler.log 2>& 1 &  
@@ -24,6 +19,6 @@
 
 
 # 坑
-- airflow一定要用绝对路径，禁止使用~/
+- airflow一定要用绝对路径，避免使用相对路径。
 
 
