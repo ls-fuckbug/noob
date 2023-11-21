@@ -140,7 +140,7 @@ slurm是一个开源、容错和高度可扩展的集群管理和作业调度系
   
 # supervisor
 
-supervisor主要的作用是管理进程，主要通过fork/exec进程对其启动（将其作为子进程），之后supervisor作为父进程对其启动，即使断电宕机也可将其重启，主要在配置文件中书写autostart=true即可。而传统方式的当即重启脚本需要写一个脚本来监控
+supervisor主要的作用是管理进程，主要通过fork/exec程进对其启动（将其作为子进程），之后supervisor作为父进程对其启动，即使断电宕机也可将其重启，主要在配置文件中书写autostart=true即可。而传统方式的当即重启脚本需要写一个脚本来监控
 
 supervisor启动的进程是由root创建，程序日志文件目录未指定会写在/下
 
