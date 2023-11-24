@@ -605,6 +605,45 @@ Java 提供了三种创建线程的方法：
 
 
 
+# JAVA版本与JDK版本
+
+## JAVA三个版本
+
+- JAVASE （标准版）
+
+- JAVAME （微型版）
+
+- JAVAEE （企业版）
+
+无论是说Java版本还是JDK版本都是针对于JavaSE这个标准版本而言，需要知道的是每个Java版本其实是对应一个具体的JDK版本，Java是一种语言，JDK是Java这门语言的开发工具包。
+
+对应关系
+
+```
+Java 1.0 和 JDK 1.0
+Java 1.1 和 JDK 1.1
+J2SE 1.2 和 JDK 1.2
+J2SE 1.3 和 JDK 1.3
+J2SE 1.4 和 JDK 1.4
+J2SE 5.0（1.5.0）和 JDK 1.5
+Java SE 6 和 JDK 1.6
+Java SE 7 和 JDK 1.7
+Java SE 8 和 JDK 1.8
+Java SE 9 和 JDK 1.9
+Java SE 10 和 JDK 10
+Java SE 11 和 JDK 11
+
+```
+
+## JDK,JRE,JVM
+
+JDK 即Java开发工具包
+
+JDK = JRE + java
+
+JRE 即Java运行环境
+
+
 
 
 
