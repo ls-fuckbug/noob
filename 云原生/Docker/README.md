@@ -83,6 +83,21 @@ Docker Daemon（守护进程）是Docker的核心组件之一，它是在主机�
 
 
 
+# Docker在各个平台上的运行机制
+
+docker镜像和操作系统没关系，docker最大的价值就是提出了镜像打包技术。首先你的明白什么是docker，什么是镜像，什么是容器，然后你就能明白镜像和操作系统之间的关系。docker是一个引擎，是基于内核的一种技术。比如Linux内核，那么它就关心是不是Linux内核，它不关心你是Ubuntu还是CentOS。所以docker也实现了和操作系统的解耦。镜像呢是把服务的运行环境打成了一个包，比如tomcat，镜像里面是把除操作系统的内核以外，然后再加上tomcat的二进制包。然后通过docker引擎构建出来一个tomcat的镜像。容器呢，比如我们想创建一个tomcat服务，之前的方式是在服务器中通过tar或者是rpm安装一个tomcat，然后在start tomcat；如果我们要安装多台的话我们需要多次手动去操作部署。现在有了tomcat镜像以后，我们可以直接利用镜像创建出多个tomcat来（关系是一个tomcat镜像可以创建出多个tomcat容器-即tomcat服务），把容器看成是tomcat的进程就行。
+
+一个程序运行，需要操作系统的支持，并且需要访问自己的私有的数据和软件。docker是容器，它将所有的访问文件和操作系统的api重新定向了，让应用内感觉自己在一个独立的操作系统上运行，而docker拦截了api调用，并且把那些全局的对操作系统的访问进行了包装，使得程序不会真的访问它们。因为docker程序访问的是容器包装的api，理论上说，只要在另一个操作系统上实现了这些容器的api，就可以把程序移植上去，因为程序不直接和操作系统打交道，感觉不到不同系统的不同。
+
+
+- LINUX：docker在linux上共享内核，无需虚拟化，完全支持native功能。所以只能创建linux类docker。
+
+- Windows：docker在windows上，启用Hyper-V或者虚拟化技术（通过虚拟机来实现，不共享windows内核）。可以创建linux类docker和Windows类docker。
+
+- Mac：docker在mac os上，同样用虚拟化技术xhyve或者virtualbox来实现，不共享mac os内核。只能创建linux类docker，不能创建Mac OSX的docker。
+
+
+只要系统架构一样，是可以使用相同的镜像的，比如x86的镜像只能x86的系统使用，arm的镜像只能arm系统使用。docker镜像对容器而言只是模拟了一个环境，跟宿主机没多大关系
 
 
 
