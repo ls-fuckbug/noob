@@ -78,6 +78,11 @@ github地址：https://github.com/shopspring/decimal
 
 	go 的 select 为 golang 提供了多路 IO 复用机制，和其他 IO 复用一样，用于检测是否有读写事件是否 ready。linux 的系统 IO 模型有 select，poll，epoll，go 的 select 和 linux 系统 select 非常相似。	
 
+- sync.WaitGroup
+
+	Go语言中可以使用sync.WaitGroup来实现并发任务的同步。
+    sync.WaitGroup内部维护着一个计数器，计数器的值可以增加和减少。例如当我们启动了N 个并发任务时，就将计数器值增加N。每个任务完成时通过调用Done()方法将计数器减1。通过调用Wait()来等待并发任务执行完，当计数器值为0时，表示所有并发任务已经完成。	
+
 
 ## 数据结构
 
@@ -143,9 +148,19 @@ slice不是线程安全的
 
 nil切片和空切片不一样，nil切片指向的地址不存在，而所有空切片固定指向一个zero数组
 
+append增加元素时，若容量不够，则会生成一个新切片，ptr指向一个新的切片
+
+当传递切片给函数时，并且在函数中通过append方法向切片中增加值，当函数返回的时候，切片的值没有发生变化。
+其实底层数组的值是已经改变了的（如果没有触发扩容的话），但是由于长度Len没有发生改变，所以显示的切片的值也没有发生改变
+
+
 ### map 
 	
 map不是线程安全的
+
+ 当往map中存储一个kv对时，通过k获取hash值，hash值的低八位和bucket数组长度取余，定位到在数组中的那个下标，hash值的高八位存储在bucket中的tophash中，用来快速判断key是否存在，key和value的具体值则通过指针运算存储，当一个bucket满时，通过overfolw指针链接到下一个bucket。
+
+
 
 ### rune
 
