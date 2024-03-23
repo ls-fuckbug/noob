@@ -80,7 +80,7 @@ Spring 团队提倡测试驱动开发（TDD）。有了控制反转 (IoC)的帮�
 Spring 的测试模块对 JUnit（单元测试框架）、TestNG（类似 JUnit）、Mockito（主要用来 Mock 对象）、PowerMock（解决 Mockito 的问题比如无法模拟 final, static， private 方法）等等常用的测试框架支持的都比较好。
 
 
-# Spring, Spring MVX, Spring Boot之间什么关系？
+# Spring, Spring MVC, Spring Boot之间什么关系？
 
 Spring 包含了多个功能模块（上面刚刚提到过），其中最重要的是 Spring-Core（主要提供 IoC 依赖注入功能的支持） 模块， Spring 中的其他模块（比如 Spring MVC）的功能实现基本都需要依赖于该模块。
 
