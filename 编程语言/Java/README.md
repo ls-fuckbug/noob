@@ -780,6 +780,41 @@ Sampling方式基于无侵入的额外线程对所有线程的调用栈快照进
 具体到“孰优孰劣”的问题层面，这两种实现技术并没有非常明显的高下之判，只有在分场景讨论下才有意义。Sampling由于低开销的特性，更适合用在CPU密集型的应用中，以及不可接受大量性能开销的线上服务中。而Instrumentation则更适合用在I/O密集的应用中、对性能开销不敏感以及确实需要精确统计的场景中。社区的Profiler更多的是基于Sampling来实现
 
 
+# ThreadLocal
+
+ThreadLocal 是 Java 中的一个线程绑定机制，它提供了线程局部变量的能力。每个线程通过 ThreadLocal 访问自己的独立副本，每个线程之间互不干扰。
+
+ThreadLocal 的实现依赖于 Java 虚拟机中三个核心类之间的协作：ThreadLocal、Thread 和 ThreadLocalMap。理解这三者之间的关系是掌握 ThreadLocal 的关键所在。
+
+ThreadLocal 本身并不存储值，它只是一个用于访问值的工具类。真正的数据存储在 Thread 对象的 threadLocals 字段中，这是一个 ThreadLocalMap 类型的内部数据结构。每一个 Thread 对象在创建时都会带有一个初始为 null 的 threadLocals 字段，只有在第一次调用 ThreadLocal 的 set 或 get 方法时才会被初始化。
+
+## ThreadLocalMap如何解决冲突
+
+ThreadLocalMap 使用一种特殊的哈希算法来解决哈希冲突问题。与普通的 HashMap 不同，ThreadLocalMap 采用线性探测法（Open Addressing）来解决冲突，即当发生冲突时，依次向后查找下一个空槽位，而不是像 HashMap 那样使用链表或红黑树。
+
+
+## ThreadLocal的内存泄漏问题
+
+ThreadLocal 导致内存泄漏的根本原因在于 ThreadLocalMap 中 Entry 类对 ThreadLocal 对象使用了弱引用（WeakReference），而对 value 则使用了强引用。这个设计看似矛盾，实则有其深意。
+当一个 ThreadLocal 对象不再被任何强引用持有时（比如方法栈中的局部变量被销毁），GC 会自动回收这个 ThreadLocal 对象。由于 Entry 的 key 是弱引用，这个 Entry 节点会变成一个只有 value 没有 key 的"残骸"。此时 value 仍然被 Entry 持有强引用，如果线程继续存活（特别是使用线程池时线程会被复用），这个 value 就无法被回收，从而造成内存泄漏。
+
+既然弱引用 key 会导致内存泄漏，为什么 ThreadLocalMap 还要使用弱引用呢？这个设计实际上是经过权衡的。如果使用强引用，那么只要 ThreadLocalMap 存在，ThreadLocal 对象就无法被回收，这会导致一个更严重的问题：当业务代码不再需要某个 ThreadLocal 对象时，它却无法被回收，造成大量的内存浪费。
+
+使用弱引用后，至少保证了只要没有其他强引用指向 ThreadLocal 对象，它就可以被回收。这样可以避免在业务代码层面忘记调用 remove 方法时，ThreadLocal 对象本身无法被回收的问题。
+
+
+正确使用 ThreadLocal 需要遵循以下原则：首先，务必在使用完毕后调用 remove 方法来显式清理数据。其次，可以使用 try-finally 块来确保 remove 方法一定会被执行。最后，对于框架代码（如 Spring、Hibernate 等），需要在请求处理完毕后自动清理 ThreadLocal。
+
+对于 Web 应用来说，一个更健壮的设计是在过滤器或拦截器层面统一进行清理，确保每次请求处理完毕后都能正确清理 ThreadLocal。
+
+
+# 强引用和弱引用
+
+强引用	对象只要被强引用指向，垃圾回收器就绝不会回收它，是最普遍、最强的引用。
+软引用	对象只被软引用指向时，在内存充足时存活、内存不足时才会被回收，适合做缓存。
+弱引用	对象只被弱引用指向时，下一次垃圾回收就会毫不犹豫地回收它，适合做规范化映射。
+虚引用	无法通过它获取对象，仅用于在对象被回收时收到通知，常用于堆外内存管理。
+
 
 
 
